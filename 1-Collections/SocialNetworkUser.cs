@@ -6,27 +6,53 @@ namespace Collections
     public class SocialNetworkUser<TUser> : User, ISocialNetworkUser<TUser>
         where TUser : IUser
     {
+        private readonly Dictionary<TUser, string> _followedUsers;
+
         public SocialNetworkUser(string fullName, string username, uint? age) : base(fullName, username, age)
         {
-            throw new NotImplementedException("TODO is there anything to do here?");
+            _followedUsers = new Dictionary<TUser, string>();
         }
 
         public bool AddFollowedUser(string group, TUser user)
         {
-            throw new NotImplementedException("TODO add user to the provided group. Return false if the user was already in the group");
+            if (this.GetFollowedUsersInGroup(group).Contains(user))
+            {
+                return false;
+            }
+            else
+            {
+                _followedUsers.Add(user, group);
+                return true;
+            }
         }
 
         public IList<TUser> FollowedUsers
         {
             get
             {
-                throw new NotImplementedException("TODO construct and return the list of all users followed by the current users, in all groups");
+                List<TUser> returnList = new List<TUser>();
+                foreach(var i in _followedUsers)
+                {
+                    if (!returnList.Contains(i.Key))
+                    {
+                        returnList.Add(i.Key);
+                    }
+                }
+                return returnList;
             }
         }
 
         public ICollection<TUser> GetFollowedUsersInGroup(string group)
         {
-            throw new NotImplementedException("TODO construct and return a collection containing of all users followed by the current users, in group");
+            List<TUser> returnList = new List<TUser>();
+            foreach (var i in _followedUsers)
+            {
+                if (i.Value.Equals(group))
+                {
+                    returnList.Add(i.Key);
+                }
+            }
+            return returnList;
         }
     }
 }
