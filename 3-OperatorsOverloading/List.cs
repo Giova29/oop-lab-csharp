@@ -216,6 +216,7 @@ namespace OperatorsOverloading
         public static List<TValue> operator -(List<TValue> list1, List<TValue> list2)
         {
             //throw new NotImplementedException();
+            //TODO da fare
             return List.Of<TValue>(list1.Head);
         }
 
